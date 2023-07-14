@@ -1,0 +1,19 @@
+const fs = require('fs');
+const path = require('path');
+
+// Remove shared_dependencies.md file
+fs.unlinkSync('./shared_dependencies.md');
+
+// Move contents of nextjs-app to the root directory of the repo
+fs.readdir('./nextjs-app', (err, files) => {
+  if (err) throw err;
+
+  files.forEach(file => {
+    let oldPath = path.join('./nextjs-app', file);
+    let newPath = path.join('./', file);
+
+    fs.rename(oldPath, newPath, (err) => {
+      if (err) throw err;
+    });
+  });
+});
